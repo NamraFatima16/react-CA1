@@ -9,14 +9,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
-import React, {useState, useEffect}  from "react";
+import React, { useState, useEffect } from "react";
 
-const formControl = 
-  {
-    margin: 1,
-    minWidth: 220,
-    backgroundColor: "rgb(255, 255, 255)"
-  };
+const formControl =
+{
+  margin: 1,
+  minWidth: 220,
+  backgroundColor: "rgb(255, 255, 255)"
+};
 
 export default function FilterMoviesCard(props) {
 
@@ -26,7 +26,7 @@ export default function FilterMoviesCard(props) {
   useEffect(() => {
     fetch(
       "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-        process.env.REACT_APP_TMDB_KEY
+      process.env.REACT_APP_TMDB_KEY
     )
       .then(res => res.json())
       .then(json => {
@@ -36,12 +36,12 @@ export default function FilterMoviesCard(props) {
       .then(apiGenres => {
         setGenres([genres[0], ...apiGenres]);
       });
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (e, type, value) => {
     e.preventDefault()
-    // Completed later
+    props.onUserInput(type, value)   // NEW
   };
   const handleTextChange = e => {
     handleChange(e, "name", e.target.value)
@@ -50,11 +50,11 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "genre", e.target.value)
   };
   return (
-    <Card 
+    <Card
       sx={{
         maxWidth: 345,
         backgroundColor: "rgb(204, 204, 0)"
-      }} 
+      }}
       variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h1">
@@ -62,17 +62,22 @@ export default function FilterMoviesCard(props) {
           Filter the movies.
         </Typography>
         <TextField
-          sx={{...formControl}}
+          sx={{ ...formControl }}
           id="filled-search"
           label="Search field"
           type="search"
           variant="filled"
+          value={props.titleFilter}
+          onChange={handleTextChange}
         />
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{ ...formControl }}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
             id="genre-select"
+            defaultValue=""
+            value={props.genreFilter}
+            onChange={handleGenreChange}
           >
             {genres.map((genre) => {
               return (
