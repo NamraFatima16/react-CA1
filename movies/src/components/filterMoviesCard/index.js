@@ -49,6 +49,7 @@ export default function FilterMoviesCard(props) {
   const handleGenreChange = e => {
     handleChange(e, "genre", e.target.value)
   };
+  
   return (
     <Card
       sx={{
