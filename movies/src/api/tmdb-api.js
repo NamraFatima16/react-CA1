@@ -86,14 +86,47 @@ export const getMovie = (args) => {
     throw error
   });
   
-  //res.json())
-   
-  // .then((json) => json.posters);
-  // console.log(json)
-  
-  //.then((json) => {
-    //console.log(json);
-    //console.log("i am here");
-   // return json.results;
 
   };
+  export const getTrendingMovies = async () =>{
+    return fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`)
+    .then((response) =>{
+      if(!response.ok){
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+    });
+  }
+
+
+  export const getTopRatedMovies = async () =>{
+    return fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`)
+    .then((response) =>{
+      if(!response.ok){
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+    });
+  }
+
+
+  export const getPopularMovies = async () =>{
+    return fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1'`)
+    .then((response) =>{
+      if(!response.ok){
+        throw new Error(response.json().message);
+      }
+      let tmp = response.json()
+      console.log(tmp)
+      return tmp;
+    })
+    .catch((error) => {
+      throw error
+    });
+  }
