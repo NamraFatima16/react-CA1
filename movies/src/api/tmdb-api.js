@@ -117,16 +117,34 @@ export const getMovie = (args) => {
 
 
   export const getPopularMovies = async () =>{
-    return fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1'`)
+    return fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`)
     .then((response) =>{
       if(!response.ok){
         throw new Error(response.json().message);
       }
-      let tmp = response.json()
-      console.log(tmp)
-      return tmp;
+      return response.json();
     })
     .catch((error) => {
       throw error
+    });
+  }
+
+
+
+  export const getSimilarMovies = async (args) =>{
+
+    const [, idPart] = args.queryKey;
+    const { id } = idPart;
+    return fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`)
+    .then((response) =>{
+      if(!response.ok){
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error)
+      throw error
+      
     });
   }

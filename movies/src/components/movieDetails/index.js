@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import { Button, colors } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 const root = {
@@ -69,14 +71,19 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
         {movie.production_countries.map((g) => (
           <li>
             <Chip label = {g.name} sx={{...chip}} ></Chip>
-
           </li>
-        ))}      
-   
-        
-
-        
+          
+        ))}          
       </Paper>
+      <Paper component="ul" sx={{...root}}>
+      <Link to={`/movies/similar/${movie.id}`}>
+      <Button color="secondary" variant="contained">Similar Movies</Button>
+      </Link>
+      
+      </Paper>
+
+    
+           
 
 
 
