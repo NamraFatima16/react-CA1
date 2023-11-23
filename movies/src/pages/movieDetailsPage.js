@@ -28,6 +28,7 @@ const MoviePage = (props) => {
         <>
           <PageTemplate movie={movie}>
             <MovieDetails movie={movie} />
+            
           </PageTemplate>
         </>
       ) : (

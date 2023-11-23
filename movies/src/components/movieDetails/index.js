@@ -10,22 +10,41 @@ import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
-import { Button, colors } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { getMovieCredits } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from '../spinner'
+import ActorList from "../actorList";
 
 
 const root = {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
+  display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  listStyle: "none",
+  padding: 1.5,
+  margin: 0,
 };
 const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => {  // Don't miss this!
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+
+  const { data, isLoading, isError } = useQuery(["credits", { id: movie.id }], getMovieCredits);
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (isError) {
+    return <h1>{isError.message}</h1>
+  }
+  const movieCast = data.cast;
+  console.log(movieCast)
+
+
+
 
   return (
     <>
@@ -37,20 +56,20 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
         {movie.overview}
       </Typography>
 
-      <Paper 
-        component="ul" 
-        sx={{...root}}
+      <Paper
+        component="ul"
+        sx={{ ...root }}
       >
         <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
+          <Chip label="Genres" sx={{ ...chip }} color="primary" />
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
-            <Chip label={g.name}  />
+            <Chip label={g.name} />
           </li>
         ))}
       </Paper>
-      <Paper component="ul" sx={{...root}}>
+      <Paper component="ul" sx={{ ...root }}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
           icon={<MonetizationIcon />}
@@ -61,38 +80,60 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
           label={`${movie.vote_average} (${movie.vote_count}`}
         />
         <Chip label={`Released: ${movie.release_date}`} />
-        
+
       </Paper>
-      < Paper component="ul" sx={{...root}}>
+      < Paper component="ul" sx={{ ...root }}>
         <li>
-        <Chip label = 'Production Countries' sx={{...chip}} color="primary">
-        </Chip>
+          <Chip label='Production Countries' sx={{ ...chip }} color="primary">
+          </Chip>
         </li>
         {movie.production_countries.map((g) => (
           <li>
-            <Chip label = {g.name} sx={{...chip}} ></Chip>
+            <Chip label={g.name} sx={{ ...chip }} ></Chip>
           </li>
-          
-        ))}          
+
+        ))}
       </Paper>
-      <Paper component="ul" sx={{...root}}>
-      <Link to={`/movies/similar/${movie.id}`}>
-      <Button color="secondary" variant="contained">Similar Movies</Button>
-      </Link>
-      
+      <Paper component="ul" sx={{ ...root }}>
+        <Link to={`/movies/similar/${movie.id}`}>
+          <Button color="secondary" variant="contained">Similar Movies</Button>
+        </Link>
+
       </Paper>
+
 
     
-           
+      <Paper 
+        component="div" 
+        sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            flexWrap: "wrap",
+            padding: 1.5,
+            margin: 0,
+        }}
+      >
+        
+        {/* <ul>
+          {movieCast.map((actor) =>(
+
+          <li>
+           {actor.name}
+          </li>
+          ))}
+        </ul> */}
+    {/* {console.log(movieCast[0])} */}
+  
+  <ActorList actor={movieCast} />
+      </Paper>
+  
 
 
-
-
-
+      
       <Fab
         color="secondary"
         variant="extended"
-        onClick={() =>setDrawerOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         sx={{
           position: 'fixed',
           bottom: '1em',
@@ -105,7 +146,7 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
-      </>
+    </>
   );
 };
-export default MovieDetails ;
+export default MovieDetails;

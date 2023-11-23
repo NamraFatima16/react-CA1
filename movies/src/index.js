@@ -16,6 +16,7 @@ import TopRatedMoviesPage from "./pages/topRatedPage";
 import PopularMoviesPage from "./pages/latestMoviePage";
 import SimilarMoviesPage from "./pages/similarMoviesPage";
 
+
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
