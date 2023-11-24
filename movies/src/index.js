@@ -33,7 +33,8 @@ const App = () => {
             <Route path="/movies/popular" element={<PopularMoviesPage/>} />
             <Route path="/movies/similar/:id" element={<SimilarMoviesPage/>} />
             <Route path="/movies/:id" element={<MoviePage />} />
-            <Route path="/" element={<HomePage />} />
+            <Route path="/movies/discover/:page" element={<HomePage />} />
+            <Route path="/" element={<HomePage/>} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </MoviesContextProvider>
