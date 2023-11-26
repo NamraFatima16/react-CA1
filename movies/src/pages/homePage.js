@@ -39,7 +39,7 @@ const HomePage = (props) => {
 
       />
       {console.log(page)}
-  {console.log( "IIIIIII AAAAMMMM HHHEEEEERRReeee" )}
+      {console.log( "IIIIIII AAAAMMMM HHHEEEEERRReeee" )}
       <Pagination sx={{ display: 'flex', justifyContent: 'center' }} count={10} page={+page}
         
         renderItem={(item) => (

@@ -44,8 +44,6 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
   console.log(movieCast)
 
 
-
-
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -94,6 +92,8 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
 
         ))}
       </Paper>
+       
+       {/* //addition on similar movie button  */}
       <Paper component="ul" sx={{ ...root }}>
         <Link to={`/movies/similar/${movie.id}`}>
           <Button color="secondary" variant="contained">Similar Movies</Button>
@@ -124,6 +124,7 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
         </ul> */}
     {/* {console.log(movieCast[0])} */}
   
+
   <ActorList actor={movieCast} />
       </Paper>
   
